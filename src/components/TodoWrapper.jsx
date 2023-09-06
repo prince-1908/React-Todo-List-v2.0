@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { TodoForm } from './TodoForm'
 import { Todo } from './Todo'
 import { TodoEditing } from './TodoEditing'
-import { Completed } from './completed'
+import { Completed } from './Completed'
 
 export const TodoWrapper = () => {
     const [todos, setTodos] = useState([]);
