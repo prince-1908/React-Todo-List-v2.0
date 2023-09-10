@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { FileEdit, Trash2 } from "lucide-react";
 import { CheckSquare } from "lucide-react";
+import { get, child, onValue } from "firebase/database";
 
 export const Todo = (props) => {
   const handleDelete = (e) => {

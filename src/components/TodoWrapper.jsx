@@ -1,19 +1,23 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { TodoForm } from './TodoForm'
 import { Todo } from './Todo'
 import { TodoEditing } from './TodoEditing'
 import { Completed } from './Completed'
+import { set, ref, onValue } from "firebase/database";
+import { v4 as uuidv4 } from 'uuid';
 
-export const TodoWrapper = () => {
+export const TodoWrapper = (props) => {
     const [todos, setTodos] = useState([]);
     const [checkedTodos, setCheckedTodes] = useState([]);
-    const [ID, setID] = useState(0);
 
+    // Create
     const newTodo = (value) => {
-        setID(ID + 1);
-        const addedTodos = { id: ID, content: value, isEditing: false };
-        setTodos([...todos, addedTodos]);
+        const addedTodo = { id: uuidv4(), content: value, isEditing: false };
+        set(ref(props.db, `todos/${uuidv4()}`), addedTodo);
     };
+
+    // Read
+    
 
     const onDelete = (index) => {
         const deletedTodos = todos.filter(todos => todos.id !== index);
@@ -77,7 +81,7 @@ export const TodoWrapper = () => {
                     <div className='text-center font-bold border-b border-black pb-1 mb-2'>completed</div>
                     <div className='flex flex-col-reverse items-center gap-2'>
                         {checkedTodos.map((todo) => {
-                            return <Completed key={todo.id} todos={todo} onCompleteDelete={onCompleteDelete} onBack={onBack} />
+                            return <Completed key={todo.id} todos={todo} onCompleteDelete={onCompleteDelete} onBack={onBack}/>
                         })}
                     </div>
                 </div>
