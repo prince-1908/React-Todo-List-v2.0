@@ -13,11 +13,24 @@ export const TodoWrapper = (props) => {
     // Create
     const newTodo = (value) => {
         const addedTodo = { id: uuidv4(), content: value, isEditing: false };
-        set(ref(props.db, `todos/${uuidv4()}`), addedTodo);
+        set(ref(props.db, `${uuidv4()}`), addedTodo);
     };
 
     // Read
-    
+    useEffect(() => {
+        onValue(ref(props.db), (snapshot) => {
+            const data = snapshot.val();
+            if (data) {
+                const tempTodo = [];
+                Object.values(data).map((todo) => {
+                    tempTodo.push(todo);
+                });
+                setTodos(tempTodo);
+            }
+        });
+    }, []);
+
+    console.log(todos);
 
     const onDelete = (index) => {
         const deletedTodos = todos.filter(todos => todos.id !== index);
@@ -48,7 +61,7 @@ export const TodoWrapper = (props) => {
     const onBack = (index) => {
         const addToTodo = checkedTodos.find(todo => todo.id === index);
         setTodos([...todos, addToTodo]);
-        
+
         const removeFromChecked = checkedTodos.filter(todo => todo.id !== index);
         setCheckedTodes(removeFromChecked);
     }
@@ -75,13 +88,14 @@ export const TodoWrapper = (props) => {
                                     : (<Todo key={todo.id} todos={todo} onDelete={onDelete} onEdit={onEdit} onCheck={onCheck} />)
                             )}
                         </div>
-                    )}
+                    )
+                }
 
                 <div className='w-1/2 border-l border-black p-2'>
                     <div className='text-center font-bold border-b border-black pb-1 mb-2'>completed</div>
                     <div className='flex flex-col-reverse items-center gap-2'>
                         {checkedTodos.map((todo) => {
-                            return <Completed key={todo.id} todos={todo} onCompleteDelete={onCompleteDelete} onBack={onBack}/>
+                            return <Completed key={todo.id} todos={todo} onCompleteDelete={onCompleteDelete} onBack={onBack} />
                         })}
                     </div>
                 </div>

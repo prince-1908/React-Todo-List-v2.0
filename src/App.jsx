@@ -3,7 +3,7 @@ import { TodoWrapper } from './components/TodoWrapper'
 
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { getDatabase, set, ref } from "firebase/database";
+import { getDatabase } from "firebase/database";
 
 const firebaseConfig = {
   apiKey: "AIzaSyD6bVeCDqfSYBdeqLKmj5X91vK-vjOrdRU",
