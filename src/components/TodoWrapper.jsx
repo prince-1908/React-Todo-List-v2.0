@@ -37,6 +37,12 @@ export const TodoWrapper = (props) => {
         set(ref(db, "todos/" + ID), addedTodo).then().catch(err => console.log(`Error in adding Todo: ${err}`));
     };
 
+    useEffect(() => {
+        setTimeout(() => {
+            setIsLoading(false);
+        }, 5000);
+    }, []);
+
     // Read
     useEffect(() => {
         onValue(ref(db, "todos/"), (snapshot) => {
