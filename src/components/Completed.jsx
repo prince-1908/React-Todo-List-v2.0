@@ -9,7 +9,7 @@ export const Completed = (props) => {
 
   const handleBack = (e) => {
     e.preventDefault();
-    props.onBack(props.todos.id);
+    props.onBack(props.todos.id, props.todos.content, props.todos.isEditing);
   }
   return (
     <>
